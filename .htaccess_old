@@ -1,0 +1,34 @@
+RewriteEngine on
+
+# --------------------------------------------------------------------------
+# URL's del módulo de seguridad
+# --------------------------------------------------------------------------
+RewriteRule ^seguridad/login$	 							app/vistas/seguridad/seguridad/Login.php
+RewriteRule ^seguridad/principal$				 			app/vistas/seguridad/seguridad/Principal.php
+RewriteRule ^seguridad/cambiarClave$						app/vistas/seguridad/seguridad/CambiarClave.php
+RewriteRule ^seguridad/recuperarCuenta$						app/vistas/seguridad/seguridad/RecuperarCuenta.php
+RewriteRule ^seguridad/reestablecerClave/(\w+)/(\w+)$		app/vistas/seguridad/seguridad/ReestablecerClave.php?c=$1&t=$2
+
+RewriteRule ^seguridad/permisos$				 			app/vistas/seguridad/permisos/Permisos.php
+
+RewriteRule ^seguridad/perfiles$			 				app/vistas/seguridad/perfiles/Perfiles.php
+RewriteRule ^seguridad/perfilesAdd$ 						app/vistas/seguridad/perfiles/PerfilesAdd.php
+RewriteRule ^seguridad/perfilesUpd/(\w+)$			 		app/vistas/seguridad/perfiles/PerfilesUpd.php?cod=$1
+
+RewriteRule ^seguridad/inquilinos$			 				app/vistas/seguridad/inquilinos/Inquilinos.php
+RewriteRule ^seguridad/inquilinosAdd$ 						app/vistas/seguridad/inquilinos/InquilinosAdd.php
+RewriteRule ^seguridad/inquilinosUpd/(\w+)$			 		app/vistas/seguridad/inquilinos/InquilinosUpd.php?cod=$1
+
+RewriteRule ^seguridad/usuarios$				 			app/vistas/seguridad/usuarios/Usuarios.php
+RewriteRule ^seguridad/usuariosAdd$ 						app/vistas/seguridad/usuarios/UsuariosAdd.php
+RewriteRule ^seguridad/usuariosUpd/(\w+)$				 	app/vistas/seguridad/usuarios/UsuariosUpd.php?cod=$1
+
+
+# --------------------------------------------------------------------------
+# URL's del módulo de parámetros
+# --------------------------------------------------------------------------
+RewriteRule ^parametros/tipos$				 				app/vistas/parametros/tipos/Tipos.php
+RewriteRule ^parametros/tiposAdd$	 						app/vistas/parametros/tipos/TiposAdd.php
+RewriteRule ^parametros/tiposUpd/(\w+)$				 		app/vistas/parametros/tipos/TiposUpd.php?cod=$1
+
+RewriteRule ^parametros/mapas$				 				app/vistas/parametros/mapas/Mapas.php
