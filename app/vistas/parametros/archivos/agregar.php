@@ -14,7 +14,7 @@
 		$('#btn_enviar').on('click', function(){
             
             var form_data = new FormData();
-            form_data.append('formato', $('#formato').val());
+            form_data.append('evento', $('#evento').val());
             form_data.append('archivo', $('#archivo').prop('files')[0]);
 
             $.ajax({

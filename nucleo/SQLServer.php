@@ -1,50 +1,82 @@
 <?php
 
-/**
- * Ruta para descar el driver de PHP-SQLServer
- * https://learn.microsoft.com/en-us/sql/connect/php/download-drivers-php-sql-server?view=sql-server-ver16#download
- */
-
 class SQLServer
 {
-    private function datosConexion($servidor)
+    private static function datosConexion($servidor)
     {
         try 
         {
 			$arrDatosCnx['localhost'] = [
-				'servidor' => 'JORGEAO/SQLEXPRESS',
-				'usuario' => 'php_app',
-				'clave' => 'Phpapp',
-				'basedatos' => 'bd_prueba',
+				"servidor" => "JORGEAO\\SQLEXPRESS",
+				"usuario" => "siigas",
+				"clave" => "siigas2023",
+				"basedatos" => "db_prueba",
 			];
 
 			return $arrDatosCnx[$servidor];
         } 
         catch (Exception $e)
         {
-            //throw $th;
 			throw new Exception($e->getMessage());
         }   
     }
 
-    private function conectar($servidor = 'localhost')
+    private static function conectar($servidor = 'localhost')
     {
         try 
         {
             $datosCnx = self::datosConexion($servidor);
+            
+            $cnx = new PDO( "sqlsrv:Server=".$datosCnx['servidor'].";Database=".$datosCnx['basedatos'], $datosCnx['usuario'], $datosCnx['clave'] );
+            $cnx->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );  
+            $cnx->setAttribute( PDO::SQLSRV_ATTR_QUERY_TIMEOUT, 1 );
 
-            $infoConeccion = array(
-                "Database"=>$datosCnx['basedatos'], 
-                "UID"=>$datosCnx['usuario'], 
-                "PWD"=>$datosCnx['clave']
-            );
-
-            $cnx = sqlsrv_connect( $datosCnx['servidor'], $infoConeccion);
+            return $cnx;
         } 
         catch (Exception $e) 
         {
 			throw new Exception($e->getMessage());
         }
     }
+
+	public static function insert($sqlSentencia, $servidor = 'localhost')
+	{
+		try 
+		{
+			$cnx = self::conectar($servidor);
+            $stmt = $cnx->query($sqlSentencia);
+
+            $datos = array();
+            $datos['error'] = false;
+            $datos['lastInsertId'] = $cnx->lastInsertId();
+
+			return $datos;
+		} 
+		catch (Exception $e) 
+		{
+			throw new Exception($e->getMessage());
+		}
+	}
+
+	public static function select($sqlSentencia, $servidor = 'localhost')
+	{
+		try 
+		{
+			$cnx = self::conectar($servidor);
+            $stmt = $cnx->query($sqlSentencia);
+
+            $datos = array();
+            
+            while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $datos[] = $fila;
+            }
+
+			return $datos;
+		} 
+		catch (Exception $e) 
+		{
+			throw new Exception($e->getMessage());
+		}
+	}
 }
 ?>
